@@ -15,7 +15,7 @@ module metro_turnstile_tb();
     end
     
     initial begin
-        $monitor($time,"VALIDATE=$0b,ACCESS CODE=%0d,CURRENT STATE=&0d,DOOR OPENS:%0d",V,A_C,state_out,open);
+        $monitor("VALIDATE=%0b,ACCESS CODE=%0d,CURRENT STATE=%0d,DOOR OPENS:%0d",V,A_C,state_out,open);
         
         rst=0;V=0;#1;
         rst=1;
@@ -27,7 +27,15 @@ module metro_turnstile_tb();
         V=1;A_C=9;
         @(posedge clk);
         V=1;A_C=9;
+        @(posedge clk);
+        V=1;A_C=23;
+        @(posedge clk);
+        V=0;A_C=9;
+        repeat(4) @(posedge clk);
+        V=1;A_C=23;
         #40;
+        $finish();
         
     end 
 endmodule
+
